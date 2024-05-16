@@ -1,0 +1,72 @@
+.formWrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* .logo {
+    width: 400px;
+    display: flex;
+    margin-bottom: 24px;
+  } */
+  
+  .form {
+      display: flex;
+      flex-direction: column;
+      width: 400px; 
+      background-color: white;
+      border-radius: 10px;
+    }
+  
+    .container {
+      margin: 24px;
+      display: block;
+    }
+    
+    .input {
+      display: block;
+      margin-bottom: 10px;
+    }
+  
+    /* .boton {
+      margin-left: 3px;
+      border: 0;
+      background-color: transparent;
+    } */
+  
+    /* .errorSpan {
+      display: block;
+      font-size: 11px;
+      color: red;
+    }
+   */
+    .submit {
+      margin: 12px;
+      border: 0;
+      background-color: black;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 6px;
+      font-size: 16px;
+    }
+  
+    /* .submit:disabled {
+      background: #ccc;
+      color: #999;
+    }
+  
+    .success {
+      border: 1px solid green;
+    }
+  
+    .error {
+      border: 1px solid red;
+    }
+    
+    .errorMessage {
+      color: red;
+      display: flex;
+      justify-content: center;
+    } */

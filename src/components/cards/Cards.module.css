@@ -1,0 +1,15 @@
+/* .cards_container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+  padding: 20px;
+} */
+
+.cards_container {
+  width: 85vw;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid_grap: 20px;
+}
+  

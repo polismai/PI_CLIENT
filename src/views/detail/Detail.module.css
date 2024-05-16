@@ -1,0 +1,20 @@
+.card {
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .card_description {
+    flex: 1;
+  }
+  
+  .card_image {
+    margin-left: 20px;
+  }
+  
+  .card_image img {
+    max-width: 50%;
+    height: auto;
+  }
