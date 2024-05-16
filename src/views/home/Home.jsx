@@ -5,7 +5,6 @@ import Navbar from '../../components/navbar/Navbar';
 import Cards from '../../components/cards/Cards';
 import style from './Home.module.css';
 
-
 const Home = () => {
 
   const dispatch = useDispatch();

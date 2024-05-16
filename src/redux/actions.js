@@ -1,31 +1,32 @@
 import { 
-   GET_VG, 
-   GET_BY_NAME, 
-   GET_BY_ID, 
-   ORDER_ALPHABETIC, 
-   ORDER_RATING, 
-   FILTER_ORIGIN, 
-   FILTER_GENDER, 
-   SET_CURRENT_PAGE, 
+  GET_VG, 
+  GET_BY_NAME, 
+  GET_BY_ID, 
+  ORDER_ALPHABETIC, 
+  ORDER_RATING, 
+  FILTER_ORIGIN, 
+  FILTER_GENDER, 
+  SET_CURRENT_PAGE, 
 } from './action-types';
 import axios from 'axios';
 
 export const getAllVideogames = () => {
-    return async (dispatch) => {
-       try {
-          const endpoint = 'http://localhost:3001/videogames/';
-          const { data: { allVideogames }} = await axios.get(endpoint);
-          
-            dispatch({
-               type: GET_VG,
-               payload: allVideogames,
-            });
-            dispatch(filterByGender('all'));
-            dispatch(filterByOrigin('all'));
-       } catch (error) {
-          console.error('Error al cargar los videojuegos:', error);
-       } 
-    };
+  return async (dispatch) => {
+    try {
+      const endpoint = 'http://localhost:3001/videogames/';
+      const { data: { allVideogames }} = await axios.get(endpoint);
+      
+      dispatch({
+        type: GET_VG,
+        payload: allVideogames,
+      });
+      
+      dispatch(filterByGender('all'));
+      dispatch(filterByOrigin('all'));
+    } catch (error) {
+      console.error('Error al cargar los videojuegos:', error);
+    } 
+  };
 };
 
 export const getByName = (name) => {
