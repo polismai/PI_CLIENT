@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import axios from 'axios';
 import validate from './Validate';
+import { useNavigate } from 'react-router-dom';
 
 import style from './Create.module.css';
 
 const Create = () => {
+
+  const navigate = useNavigate();
+  const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
 
   const [input, setInput] = useState({
     name: '',
@@ -45,19 +49,25 @@ const Create = () => {
     //Validar el formulario antes de enviarlo
     const listaDeErrores = validate(input);
     setErrors(listaDeErrores);
-    if (Object.keys(listaDeErrores).length > 0) {
-      return; // No enviar el formulario si hay errores
-    }
+    // if (Object.keys(listaDeErrores).length > 0) {
+    //   return; // No enviar el formulario si hay errores
+    // }
 
     try {
       // Realizar la solicitud POST para crear un nuevo videojuego
-      const response = await axios.post('/http://localhost:3001/videogames/', input);
+      const response = await axios.post('/http://localhost:3001/videogames', input);
+      const videogameID = response.data.newId;
+
+      await Promise.all(input.genres.map(async (genreId) => {
+        // await axios.post(`/http://localhost:3001/videogames/${videogameId}/genres/${genreId}`);
+      }));
 
       // Manejar la respuesta
-      console.log('Nuevo videojuego creado con ID:', response.data.newId);
-      
+      console.log('Nuevo videojuego creado con ID:', videogameID);
+      setSubmittedSuccessfully(true);
       // Redirigir a la página de inicio u otra página según sea necesario
       // Aquí puedes usar algún enrutador de cliente como react-router-dom para redirigir
+      navigate('/home');
     } catch (error) {
       console.error('Error al crear el nuevo videojuego:', error);
     }
@@ -65,7 +75,10 @@ const Create = () => {
   
   const handleGenreChange = (event) => {
     const { value } = event.target;
-    setInput({ ...input, genres: [...input.genres, value] });
+    if (!input.genres.includes(value)) {
+      setInput({ ...input, genres: [...input.genres, value] });
+      setErrors({ ...errors, genres: [] });
+    }
   };
 
   const removeGenre = (genre) => {
@@ -144,7 +157,7 @@ const Create = () => {
                   <option value= 'Educational'>Educational</option>
                   <option value= 'Card'>Card</option>
                 </select>
-                  <span>{errors.rating}</span>
+                  <span>{errors.genres}</span>
               </div>  
             </div>
             <div>
@@ -157,6 +170,7 @@ const Create = () => {
           </div>
           <button type='submit' className={style.submit}>Crear videojuego</button>
         </form>
+        {submittedSuccessfully && <p>¡El juego se creó correctamente!</p>}
       </div>
     );
 };

@@ -1,11 +1,30 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender } from '../../redux/actions';
 import SearchBar from '../searchBar/SearchBar';
 import style from './Navbar.module.css';
 
-const Navbar = ({ handleChange, handleSubmit, errorMessage, handleOrderByRating, handleOrderByAlphabetic, handleFilterByOrigin, handleFilterByGender }) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const showNav = location.pathname !== '/';
+
+  const handleOrderByRating = (event) => {
+    dispatch(orderByRating(event.target.value));
+  };
+
+  const handleOrderByAlphabetic = (event) => {
+    dispatch(orderByAlphabetic(event.target.value));
+  };
+
+  const handleFilterByOrigin = (event) => {
+    dispatch(filterByOrigin(event.target.value));
+  };
+
+  const handleFilterByGender = (event) => {
+    dispatch(filterByGender(event.target.value));
+  };
 
   return (
     <>
@@ -14,20 +33,22 @@ const Navbar = ({ handleChange, handleSubmit, errorMessage, handleOrderByRating,
           <button onClick = {()=> navigate("/home")}>Home</button>  
           <button onClick = {()=> navigate(-1)}>Atras</button>
           <button onClick = {()=> navigate("/create")}>Crear</button>
-          <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} errorMessage={errorMessage}/>  
+          <SearchBar />  
           <div className={style.containerSelect}>
             <select className={style.select} onChange={handleOrderByRating}>
-              <option value= 'A'>Ascendente</option>
-              <option value= 'D'>Descendente</option>
+              <option>Ordenar por Rating</option>
+              <option value='A'>Ascendente</option>
+              <option value='D'>Descendente</option>
             </select>
             <select className={style.select} onChange={handleOrderByAlphabetic}>
-              <option value= 'A'>A-Z</option>
-              <option value= 'D'>Z-A</option>
+              <option>Ordenar Alfabe</option>
+              <option value='A'>A-Z</option>
+              <option value='D'>Z-A</option>
             </select>
             <select className={style.select} onChange={handleFilterByOrigin}>
-              <option value= 'all'>Todos</option>
-              <option value= 'false'>Api</option>
-              <option value= 'true'>BDD</option>
+              <option value='all'>Todos</option>
+              <option value='false'>Api</option>
+              <option value='true'>BDD</option>
             </select>
             <select className={style.select} onChange={handleFilterByGender}>
               <option value= 'all'>Todos</option>

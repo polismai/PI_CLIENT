@@ -20,9 +20,9 @@ export const getAllVideogames = () => {
         type: GET_VG,
         payload: allVideogames,
       });
-      
-      dispatch(filterByGender('all'));
-      dispatch(filterByOrigin('all'));
+
+      // dispatch(filterByGender('all'));
+      // dispatch(filterByOrigin('all'));
     } catch (error) {
       console.error('Error al cargar los videojuegos:', error);
     } 
@@ -30,25 +30,25 @@ export const getAllVideogames = () => {
 };
 
 export const getByName = (name) => {
-   return async (dispatch) => {
-      try {
-         const endpoint = `http://localhost:3001/videogames?name=${name}`;
-         const { data: { videogameByName }} = await axios.get(endpoint);
+  return async (dispatch) => {
+    try {
+      const endpoint = `http://localhost:3001/videogames?name=${name}`;
+      const { data: { videogameByName }} = await axios.get(endpoint);
 
-         if (!videogameByName.length) {
-            throw new Error('No se encontraron videojuegos con este nombre');
-         }
+      if (!videogameByName.length) {
+        throw new Error('No se encontraron videojuegos con este nombre');
+      }
 
-           dispatch({
-              type: GET_BY_NAME,
-              payload: videogameByName,
-           });
+      dispatch({
+        type: GET_BY_NAME,
+        payload: videogameByName,
+      });
 
-      } catch (error) {
-         console.error('Error al cargar el videogame:', error);
-         throw error;
-      } 
-   };
+    } catch (error) {
+      console.error('Error al cargar el videogame:', error);
+      throw error;
+    }
+  };
 };
 
 export const getById = (id) => {
