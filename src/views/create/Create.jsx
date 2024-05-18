@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import validate from './Validate';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +9,26 @@ const Create = () => {
 
   const navigate = useNavigate();
   const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
+  const [allGenres, setAllGenres] = useState([]);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const {data: { allGenres }} = await axios.get('http://localhost:3001/genres');
+        setAllGenres(allGenres);
+      } catch (error) {
+        console.error('Error al cargar los generos:', error);
+      }
+    };
+
+    fetchGenres();
+  }, []);
 
   const [input, setInput] = useState({
     name: '',
-    image: '',
+    background_image: '',
     description: '',
-    platforms: '',
+    platforms: [],
     released: '',
     rating: '',
     genres: [],
@@ -22,7 +36,7 @@ const Create = () => {
 
   const [errors, setErrors] = useState({
     name: [],
-    image: [],
+    background_image: [],
     description: [],
     platforms: [],
     released: [],
@@ -40,29 +54,27 @@ const Create = () => {
       [property]: value
     });
 
-    const listaDeErrores = validate({...input, [property]:value});
+    const listaDeErrores = validate({...input, [property]: value});
     setErrors(listaDeErrores)
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //Validar el formulario antes de enviarlo
     const listaDeErrores = validate(input);
     setErrors(listaDeErrores);
-    // if (Object.keys(listaDeErrores).length > 0) {
-    //   return; // No enviar el formulario si hay errores
-    // }
+    
+
+    const hasErrors = Object.values(listaDeErrores).every(arr => Array.isArray(arr) && arr.length > 0);
+
+    if (hasErrors) {
+      return;
+    }
 
     try {
       // Realizar la solicitud POST para crear un nuevo videojuego
-      const response = await axios.post('/http://localhost:3001/videogames', input);
+      const response = await axios.post('http://localhost:3001/videogames', input);
       const videogameID = response.data.newId;
 
-      await Promise.all(input.genres.map(async (genreId) => {
-        // await axios.post(`/http://localhost:3001/videogames/${videogameId}/genres/${genreId}`);
-      }));
-
-      // Manejar la respuesta
       console.log('Nuevo videojuego creado con ID:', videogameID);
       setSubmittedSuccessfully(true);
       // Redirigir a la página de inicio u otra página según sea necesario
@@ -74,105 +86,93 @@ const Create = () => {
   };
   
   const handleGenreChange = (event) => {
-    const { value } = event.target;
-    if (!input.genres.includes(value)) {
-      setInput({ ...input, genres: [...input.genres, value] });
-      setErrors({ ...errors, genres: [] });
-    }
+    const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+    setInput({ ...input, genres: selectedOptions });
+    setErrors({ ...errors, genres: []});
   };
 
-  const removeGenre = (genre) => {
-    const updatedGenres = input.genres.filter((g) => g !== genre);
-    setInput({ ...input, genres: updatedGenres });
+  const handlePlatformChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+    setInput({ ...input, platforms: selectedOptions });
+    setErrors({ ...errors, platforms: []});
   };
   
-    return (
-      <div className={style.formWrapper}>
-        <h2>Crear nuevo videojuego</h2>
-        <form className={style.form} onSubmit={handleSubmit}> 
-          <div className={style.container}>
-            <div className={style.input}>
-              <label htmlFor='name'>Nombre</label>
-              <div>
-                <input name='name' value={input.name} onChange={handleChange} />
-                <span>{errors.name}</span>
-              </div>
-            </div>
-            <div className={style.input}>
-              <label htmlFor='image'>Imagen</label>
-              <div>
-                <input name='image' value={input.image} onChange={handleChange} />
-                <span>{errors.image}</span>
-              </div>  
-            </div>
-            <div className={style.input}>
-              <label htmlFor='description'>Descripción</label>
-              <div>
-                <input name='description' value={input.description} onChange={handleChange} />
-                <span>{errors.description}</span>
-              </div>
-            </div>
-            <div className={style.input}>
-              <label htmlFor='platforms'>Plataformas</label>
-              <div>
-                <input name='platforms' value={input.platforms} onChange={handleChange} />
-                <span>{errors.platforms}</span>
-              </div>
-            </div>
-            <div className={style.input}>
-              <label htmlFor='released'>Fecha de lanzamiento</label>
-              <div>
-                <input name='released' value={input.released} onChange={handleChange} />
-                <span>{errors.released}</span>
-              </div>
-            </div>
-            <div className={style.input}>
-              <label htmlFor='rating'>Rating</label>
-              <div>
-                <input type='number' name='rating' value={input.rating} onChange={handleChange} />
-                <span>{errors.rating}</span>
-              </div>  
-            </div>
-            <div className={style.input}>
-              <label>Géneros</label>
-              <div>
-                <select multiple onChange={handleGenreChange}>
-                  <option value= 'Action'>Action</option>
-                  <option value= 'Indie'>Indie</option>
-                  <option value= 'Adventure'>Adventure</option>
-                  <option value= 'RPG'>RPG</option>
-                  <option value= 'Strategy'>Strategy</option>
-                  <option value= 'Shooter'>Shooter</option>
-                  <option value= 'Casual'>Casual</option>
-                  <option value= 'Simulation'>Simulation</option>
-                  <option value= 'Puzzle'>Puzzle</option>
-                  <option value= 'Arcade'>Arcade</option>
-                  <option value= 'Platformer'>Platformer</option>
-                  <option value= 'Racing'>Racing</option>
-                  <option value= 'Massively Multiplayer'>Massively Multiplayer</option>
-                  <option value= 'Sports'>Sports</option>
-                  <option value= 'Fighting'>Fighting</option>
-                  <option value= 'Family'>Family</option>
-                  <option value= 'Board Games'>Board Games</option>
-                  <option value= 'Educational'>Educational</option>
-                  <option value= 'Card'>Card</option>
-                </select>
-                  <span>{errors.genres}</span>
-              </div>  
-            </div>
+  return (
+    <div className={style.formWrapper}>
+      <h2>Crear nuevo videojuego</h2>
+      <form className={style.form} onSubmit={handleSubmit}> 
+        <div className={style.container}>
+          <div className={style.input}>
+            <label htmlFor='name'>Nombre</label>
             <div>
-              {input.genres.map((genre, index) => (
-                <span key={index} className={style.genreTag} onClick={() => removeGenre(genre)}>
-                  {genre} X
-                </span>
-              ))}
+              <input name='name' value={input.name} onChange={handleChange} />
+              <span>{errors.name}</span>
             </div>
           </div>
-          <button type='submit' className={style.submit}>Crear videojuego</button>
-        </form>
-        {submittedSuccessfully && <p>¡El juego se creó correctamente!</p>}
-      </div>
-    );
+          <div className={style.input}>
+            <label htmlFor='background_image'>Imagen</label>
+            <div>
+              <input name='background_image' value={input.background_image} onChange={handleChange} />
+              <span>{errors.background_image}</span>
+            </div>  
+          </div>
+          <div className={style.input}>
+            <label htmlFor='description'>Descripción</label>
+            <div>
+              <input name='description' value={input.description} onChange={handleChange} />
+              <span>{errors.description}</span>
+            </div>
+          </div>
+          <div className={style.input}>
+            <label htmlFor='platforms'>Plataformas</label>
+            <div>
+              <select multiple onChange={handlePlatformChange} name='platforms'>
+                <option value="PC">PC</option>
+                <option value="PlayStation 5">PlayStation 5</option>
+                <option value="Xbox One">Xbox One</option>
+                <option value="PlayStation 4">PlayStation 4</option>
+                <option value="Xbox Series S/X">Xbox Series S/X</option>
+                <option value="Nintendo Switch">Nintendo Switch</option>
+                <option value="iOS">iOS</option>
+                <option value="Android">Android</option>
+                <option value="Nintendo 3DS">Nintendo 3DS</option>
+                <option value="Nintendo DS">Nintendo DS</option>
+                <option value="Nintendo DSi">Nintendo DSi</option>
+              </select>
+              <span>{errors.platforms}</span>
+            </div>
+          </div>
+          <div className={style.input}>
+            <label htmlFor='released'>Fecha de lanzamiento</label>
+            <div>
+              <input name='released' value={input.released} onChange={handleChange} />
+              <span>{errors.released}</span>
+            </div>
+          </div>
+          <div className={style.input}>
+            <label htmlFor='rating'>Rating</label>
+            <div>
+              <input type='number' name='rating' value={input.rating} onChange={handleChange} />
+              <span>{errors.rating}</span>
+            </div>  
+          </div>
+          <div className={style.input}>
+            <label>Géneros</label>
+            <div>
+              <select multiple onChange={handleGenreChange} name='genres'>
+                {allGenres.map(genre => (
+                  <option key={genre.id} value={genre.id}>{genre.name}</option>
+                ))}
+              </select>
+              <span>{errors.genres}</span>
+            </div>  
+          </div>
+        </div>
+        <button type='submit' className={style.submit}>Crear videojuego</button>
+      </form>
+      {submittedSuccessfully && <p>¡El juego se creó correctamente!</p>}
+    </div>
+  );
 };
 
 export default Create;
