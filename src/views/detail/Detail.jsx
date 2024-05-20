@@ -1,66 +1,49 @@
-import style from './Detail.module.css';
-import { getById } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import MiniNavbar from '../../components/miniNavbar/MiniNavbar';
+
+import style from './Detail.module.css';
 
 const Detail = () => {
-
-  const dispatch = useDispatch();
-  const videogameDetail = useSelector((state) => state.gameDetails);
-  
-
-  // const [ videogame, setVideogame ] = useState();
-
-  // useEffect(async () => {
-  //   const { data: { videogameDetail } } = await axios.get(`http://localhost:3001/videogames/${id}`);
-  //   setVideogame(videogameDetail);
-  //   console.log(videogameDetail)
-  // }, []);
-
   const params = useParams();
   const id = params.id;
 
+  const [detail, setDetail] = useState();
+
   useEffect(() => {
-    const fetchData = async (id) => {
-      try {
-        dispatch(getById(id));
-      } catch (error) {
-        console.error('Error al cargar el detalle:', error);
-      }
+    const fetchDetail = async () => {
+      const { data: { videogameDetail }} = await axios.get(`http://localhost:3001/videogames/${id}`);  
+      setDetail(videogameDetail)
     };
 
-    fetchData(id);
-   
-    // dispatch(getAllVideogames())
-    // return (() => {
-    //   clearDetail()
-    // })
-  }, [dispatch, id]);
+    fetchDetail();
+  }, [id]);
 
-  if (videogameDetail) {
+  if (detail) {
     return (
       <div>
+        <MiniNavbar />
         <div className={style.card}>
           <div className={style.card_description}> 
-          {videogameDetail.name && <h2>{videogameDetail.name}</h2> }
-          {videogameDetail.platforms && <p>Plataformas: {videogameDetail.platforms.map(({ name }, i) => {
+          {detail.name && <h2>{detail.name}</h2> }
+          {detail.platforms && <p>Plataformas: {detail.platforms.map(({ name }, i) => {
             return (
               <p key={i}>{name}</p>
             )
           })}</p>} 
-          {videogameDetail.description && <p>Descripcion: {videogameDetail.description}</p>}
-          {videogameDetail.rating && <p>Rating: {videogameDetail.rating}</p>}
-          {videogameDetail.genres && <p>Generos: {videogameDetail.genres.map(({ name }, i) => {
+          {detail.description && <p>Descripcion: {detail.description}</p>}
+          {detail.rating && <p>Rating: {detail.rating}</p>}
+          {detail.genres && <p>Generos: {detail.genres.map(({ name }, i) => {
             return (
              <p key={i}>{name}</p>
             )
           })}</p>}
-          {videogameDetail.released && <p>Fecha de lanzamiento: {videogameDetail.released}</p>}
+          {detail.released && <p>Fecha de lanzamiento: {detail.released}</p>}
           </div>
-          {videogameDetail.background_image && (
+          {detail.background_image && (
           <div className={style.card_image}>
-            <img src={videogameDetail.background_image} alt={videogameDetail.name} />
+            <img src={detail.background_image} alt={detail.name} />
           </div>
           )}
         </div>

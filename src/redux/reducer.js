@@ -1,10 +1,12 @@
-import { GET_VG, GET_BY_NAME, GET_BY_ID, ORDER_ALPHABETIC, ORDER_RATING, FILTER_ORIGIN, SET_CURRENT_PAGE, FILTER_GENDER } from './action-types';
+import { GET_VG, GET_BY_NAME, ORDER_ALPHABETIC, ORDER_RATING, FILTER_ORIGIN, SET_CURRENT_PAGE, FILTER_GENDER, GET_GENRES, SET_ERROR } from './action-types';
 
 const initialState = {
   allVideogames: [],
   allVideogamesBackup: [],
   currentPage: 1,
   pageSize: 15,
+  allGenres: [],
+  error: '',
 };
 
 const convertToBoolean = (value) => {
@@ -23,11 +25,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allVideogames: action.payload,
-      };
-    case GET_BY_ID:
-      return {
-        ...state,
-        gameDetails: action.payload,
+        currentPage: 1
       };
     case ORDER_RATING:
       const sortedByRating = [...state.allVideogames];
@@ -75,7 +73,7 @@ const rootReducer = (state = initialState, action) => {
       if (action.payload === 'all') {
         return {
           ...state,
-          allVideogames: state.allVideogames,
+          allVideogames: state.allVideogamesBackup,
           currentPage: 1,
         };
       } else {
@@ -93,6 +91,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentPage: action.payload
+      };
+    case GET_GENRES:
+      return {
+        ...state,
+        allGenres: action.payload
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return {...state};

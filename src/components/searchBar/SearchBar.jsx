@@ -8,6 +8,7 @@ const SearchBar = () => {
 
   const [searchString, setSearchString] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     setSearchString(event.target.value)
@@ -15,12 +16,18 @@ const SearchBar = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (loading || searchString === '') {
+      return
+    }
+
     try {
-      
+      setLoading(true);
       await dispatch(getByName(searchString));
+      setLoading(false);
       setErrorMessage('');
     } catch (error) {
-      setErrorMessage('¡No se encontraron videojuegos con este nombre!');
+      setLoading(false);
+      setErrorMessage('¡No se encontraron videojuegos con ese nombre!');
     }
   };  
 
@@ -33,8 +40,8 @@ const SearchBar = () => {
           type='search'
           onChange={handleChange}
         />
-        <button className={style.search_button} type='submit'>
-          Buscar
+        <button className={style.search_button} type='submit' disabled={loading}>
+          {loading ? 'Buscando...' : 'Buscar'}
         </button>
       </form>
       {errorMessage && <div className={style.errorMessage}>{errorMessage}</div>}

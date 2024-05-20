@@ -2,20 +2,25 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import validate from './Validate';
 import { useNavigate } from 'react-router-dom';
+import { PLATFORMS } from '../../constants';
+import MiniNavbar from '../../components/miniNavbar/MiniNavbar';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllGenres } from '../../redux/actions';
 
 import style from './Create.module.css';
 
+
 const Create = () => {
 
+  const dispatch = useDispatch();
+  const allGenres = useSelector((state) => state.allGenres);
   const navigate = useNavigate();
-  const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
-  const [allGenres, setAllGenres] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const {data: { allGenres }} = await axios.get('http://localhost:3001/genres');
-        setAllGenres(allGenres);
+        await dispatch(getAllGenres());
       } catch (error) {
         console.error('Error al cargar los generos:', error);
       }
@@ -47,7 +52,7 @@ const Create = () => {
   const handleChange = (event) => {
 
     const property = event.target.name;
-    const value = event.target.value;
+    let value = event.target.value;
 
     setInput({
       ...input,
@@ -56,31 +61,33 @@ const Create = () => {
 
     const listaDeErrores = validate({...input, [property]: value});
     setErrors(listaDeErrores)
-  }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (loading) {
+      return
+    }
+
     const listaDeErrores = validate(input);
     setErrors(listaDeErrores);
-    
-
     const hasErrors = Object.values(listaDeErrores).every(arr => Array.isArray(arr) && arr.length > 0);
-
     if (hasErrors) {
       return;
     }
 
     try {
-      // Realizar la solicitud POST para crear un nuevo videojuego
+      setLoading(true);
       const response = await axios.post('http://localhost:3001/videogames', input);
       const videogameID = response.data.newId;
 
       console.log('Nuevo videojuego creado con ID:', videogameID);
-      setSubmittedSuccessfully(true);
-      // Redirigir a la página de inicio u otra página según sea necesario
-      // Aquí puedes usar algún enrutador de cliente como react-router-dom para redirigir
-      navigate('/home');
+
+      setLoading(false);
+      navigate(`/detail/${videogameID}`);
     } catch (error) {
+      setLoading(false);
       console.error('Error al crear el nuevo videojuego:', error);
     }
   };
@@ -98,6 +105,8 @@ const Create = () => {
   };
   
   return (
+    <>
+    <MiniNavbar />
     <div className={style.formWrapper}>
       <h2>Crear nuevo videojuego</h2>
       <form className={style.form} onSubmit={handleSubmit}> 
@@ -127,17 +136,9 @@ const Create = () => {
             <label htmlFor='platforms'>Plataformas</label>
             <div>
               <select multiple onChange={handlePlatformChange} name='platforms'>
-                <option value="PC">PC</option>
-                <option value="PlayStation 5">PlayStation 5</option>
-                <option value="Xbox One">Xbox One</option>
-                <option value="PlayStation 4">PlayStation 4</option>
-                <option value="Xbox Series S/X">Xbox Series S/X</option>
-                <option value="Nintendo Switch">Nintendo Switch</option>
-                <option value="iOS">iOS</option>
-                <option value="Android">Android</option>
-                <option value="Nintendo 3DS">Nintendo 3DS</option>
-                <option value="Nintendo DS">Nintendo DS</option>
-                <option value="Nintendo DSi">Nintendo DSi</option>
+                {PLATFORMS.map((platform, id) => (
+                  <option key={id} value={platform}>{platform}</option>
+                ))}
               </select>
               <span>{errors.platforms}</span>
             </div>
@@ -145,7 +146,7 @@ const Create = () => {
           <div className={style.input}>
             <label htmlFor='released'>Fecha de lanzamiento</label>
             <div>
-              <input name='released' value={input.released} onChange={handleChange} />
+              <input name='released' placeholder='aaaa-mm-dd'value={input.released} onChange={handleChange} />
               <span>{errors.released}</span>
             </div>
           </div>
@@ -168,10 +169,10 @@ const Create = () => {
             </div>  
           </div>
         </div>
-        <button type='submit' className={style.submit}>Crear videojuego</button>
+        <button type='submit' className={style.submit} disabled={loading}>{loading ? 'Creando videojuego....' : 'Crear videojuego'}</button>
       </form>
-      {submittedSuccessfully && <p>¡El juego se creó correctamente!</p>}
     </div>
+    </>
   );
 };
 

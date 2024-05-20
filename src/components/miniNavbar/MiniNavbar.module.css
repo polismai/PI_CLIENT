@@ -1,0 +1,24 @@
+
+  .nav {
+    background-color: #7675776b;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: end;
+  }
+  
+  .nav button {
+    background-color: #aba1aa; 
+    color: #020000; 
+    font-size: 16px;
+    font-weight: bold;
+    border: none; 
+    border-radius: 5px; 
+    margin-left: 8px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    
+  }
+  
+  .nav button:hover {
+    background-color: #79bf37dc; 
+  }

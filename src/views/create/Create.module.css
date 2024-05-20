@@ -17,16 +17,17 @@
       width: 400px; 
       background-color: white;
       border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
   
     .container {
       margin: 24px;
-      display: block;
     }
     
     .input {
-      display: block;
-      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
     }
   
     /* .boton {
@@ -41,7 +42,50 @@
       color: red;
     }
    */
-    .submit {
+
+   input, select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+
+  select[multiple] {
+    height: auto;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .submit {
+    margin: 12px;
+    border: 0;
+    background-color: #007bff; /* Cambia el color de fondo del botón */
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  }
+  
+  .submit:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el ratón */
+  }
+
+    /* .submit {
       margin: 12px;
       border: 0;
       background-color: black;
@@ -51,7 +95,7 @@
       padding: 6px;
       font-size: 16px;
     }
-  
+   */
     /* .submit:disabled {
       background: #ccc;
       color: #999;
