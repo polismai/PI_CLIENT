@@ -6,4 +6,5 @@ export const FILTER_ORIGIN = 'FILTER_ORIGIN';
 export const FILTER_GENDER = 'FILTER_GENDER';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const GET_GENRES = 'GET_GENRES';
+export const GET_PLATFORMS = 'GET_PLATFORMS';
 export const SET_ERROR = 'ERROR';

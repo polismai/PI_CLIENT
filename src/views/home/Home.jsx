@@ -12,6 +12,7 @@ const Home = () => {
   const currentPage = useSelector((state) => state.currentPage);
   const pageSize = useSelector((state) => state.pageSize);
   const error = useSelector((state) => state.error);
+  const allGenres = useSelector((state) => state.allGenres);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -23,10 +24,6 @@ const Home = () => {
       }
     };
 
-    fetchData();
-  }, [dispatch]);
-
-  useEffect(() => {
     const fetchGenres = async () => {
       try {
         await dispatch(getAllGenres());
@@ -35,8 +32,14 @@ const Home = () => {
       }
     };
 
-    fetchGenres();
-  }, []);
+    if (!allVideogames.length) {
+      fetchData()
+    }
+
+    if (!allGenres.length) {
+      fetchGenres()
+    }
+  }, [dispatch]);
 
   const [totalPages, setTotalPages] = useState(0);
   const [paginatedVideogames, setPaginatedVideogames] = useState([]);
@@ -67,11 +70,11 @@ const Home = () => {
 
   return (
     <div className={style.home}>
-      <h2 className={style.title}>Esta es la Home page</h2>
+      <h2 className={style.title}>Videogames</h2>
       <Navbar />
 
       {!error && (paginatedVideogames.length !== 0 ? <Cards allVideogames={paginatedVideogames} /> : <span>CARGANDO...</span>)}
-      {error && <div>Error al cargar los videogames</div>}
+      {error && <div>{error}</div>}
 
       {paginatedVideogames.length > 0 && (
         <div className={style.pagination}>

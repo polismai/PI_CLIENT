@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getByName } from '../../redux/actions';
+
 import style from "./SearchBar.module.css";
 
 const SearchBar = () => {
+  
   const dispatch = useDispatch();
 
   const [searchString, setSearchString] = useState('');
@@ -11,7 +13,8 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
-    setSearchString(event.target.value)
+    setSearchString(event.target.value);
+    setErrorMessage('');
   };
 
   const handleSubmit = async (event) => {

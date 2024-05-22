@@ -1,15 +1,16 @@
 .card {
     margin: 15px;
-    background-color: #79bf37dc;
+    background-color: #000;
     max-width: 230px;
     max-height: 420px;
     border-radius: 10px;
-    border: 1px solid #79bf37;
-    box-shadow: 0 2px 2px rgb(244, 229, 115);
+    border: 2px solid #fafbf9;
+    box-shadow: 0 8px 8px rgb(248, 248, 247);;
     text-align: center;
     font-family: monospace;
     overflow: hidden;
     transition: 0,2s;
+    color: white;
   }
 
   /*.card:hover {
@@ -18,12 +19,12 @@
   }*/
 
   .card:hover {
-    box-shadow: 0 0 10px #79bf37dc, 0 0 40px #79bf37dc, 0 0 80px #79bf37dc;
+    box-shadow: 0 0 10px #fbfcfbdc, 0 0 40px #fbfcfbdc, 0 0 80px #fbfcfbdc;
   }
 
   .card img {
     width: 90%;
-    border-radius: 50%;
+    border-radius: 5%;
     border: 2px solid #7675776b;
     transition: transform 0.3s ease;
     margin-bottom: 8px;

@@ -18,17 +18,21 @@ body {
       monospace;
   }
   
-.home {
+/* .home {
+    background-image: url('../../images/58916.jpg');
+    background-size: cover;
+    background-position: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
 .title {
     margin-top: 75px;
     margin-bottom: 50px;
     font-size: 76px;
-    color: #0ccac4;
+    color: #ef2849;
+    text-shadow: 0 4px 4px rgb(248, 248, 247);
     font-family: sans-serif;
 }
 

@@ -32,28 +32,34 @@
     margin-left: 8px;
   }
 
-  .search_form {
-    display: flex;
-    align-items: center;
-  }
-
   .search_input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
+    width: 100%; /* Utiliza todo el ancho disponible */
+    max-width: 300px; /* Ancho máximo del input */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho */
+    padding: 8px; /* Añade un poco de espacio interno */
+    border: 1px solid #ccc; /* Añade un borde */
+    border-radius: 5px; /* Agrega esquinas redondeadas */
   }
-
+  
+  .search_form {
+    display: flex; /* Para alinear el input y el botón */
+  }
+  
   .search_button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Quita el borde */
+    border-radius: 5px; /* Agrega esquinas redondeadas */
+    padding: 8px 16px; /* Añade un poco de espacio interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Agrega una transición suave */
   }
-
+  
+  .search_button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar sobre el botón */
+  }
+  
   .errorMessage {
-    color: red;
-    margin-top: 5px;
+    color: red; /* Color del mensaje de error */
+    margin-top: 5px; /* Añade un poco de espacio arriba del mensaje */
   }

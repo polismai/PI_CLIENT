@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import validate from './Validate';
 import { useNavigate } from 'react-router-dom';
-import { PLATFORMS } from '../../constants';
 import MiniNavbar from '../../components/miniNavbar/MiniNavbar';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllGenres } from '../../redux/actions';
+import { getAllGenres, getAllPlatforms } from '../../redux/actions';
 
 import style from './Create.module.css';
 
@@ -14,6 +13,7 @@ const Create = () => {
 
   const dispatch = useDispatch();
   const allGenres = useSelector((state) => state.allGenres);
+  const allPlatforms = useSelector((state) => state.allPlatforms);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -27,8 +27,20 @@ const Create = () => {
     };
 
     fetchGenres();
-  }, []);
+  }, [dispatch]);
 
+  useEffect(() => {
+    const fetchPlatforms = async () => {
+      try {
+        await dispatch(getAllPlatforms());
+      } catch (error) {
+        console.error('Error al cargar las plataformas:', error);
+      }
+    };
+
+    fetchPlatforms();
+  }, [dispatch]);
+  
   const [input, setInput] = useState({
     name: '',
     background_image: '',
@@ -48,12 +60,25 @@ const Create = () => {
     rating: [],
     genres: [],
   });
+
+  const [formTouched, setFormTouched] = useState(false);
+  const [interacted, setInteracted] = useState({
+    name: false,
+    background_image: false,
+    description: false,
+    platforms: false,
+    released: false,
+    rating: false,
+    genres: false
+  });
  
   const handleChange = (event) => {
+    setFormTouched(true);
 
     const property = event.target.name;
-    let value = event.target.value;
+    const value = event.target.value;
 
+    setInteracted({...interacted, [property]: true});
     setInput({
       ...input,
       [property]: value
@@ -66,16 +91,16 @@ const Create = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (loading) {
-      return
-    }
+    // if (loading) {
+    //   return
+    // }
 
-    const listaDeErrores = validate(input);
-    setErrors(listaDeErrores);
-    const hasErrors = Object.values(listaDeErrores).every(arr => Array.isArray(arr) && arr.length > 0);
-    if (hasErrors) {
-      return;
-    }
+    // const listaDeErrores = validate(input);
+    // setErrors(listaDeErrores);
+    // const hasErrors = Object.values(listaDeErrores).every(arr => Array.isArray(arr) && arr.length > 0);
+    // if (hasErrors) {
+    //   return;
+    // }
 
     try {
       setLoading(true);
@@ -103,7 +128,21 @@ const Create = () => {
     setInput({ ...input, platforms: selectedOptions });
     setErrors({ ...errors, platforms: []});
   };
+
+  const disable = () => {
+    if (!formTouched) {
+      return true;
+    }
   
+    for (const key in errors) {
+      if (errors[key].length > 0) {
+        return true;
+      }
+    }
+  
+    return loading;
+  };
+
   return (
     <>
     <MiniNavbar />
@@ -114,62 +153,64 @@ const Create = () => {
           <div className={style.input}>
             <label htmlFor='name'>Nombre</label>
             <div>
-              <input name='name' value={input.name} onChange={handleChange} />
-              <span>{errors.name}</span>
+              <input name='name' value={input.name} className={errors.name.length ? style.error : (interacted.name ? style.success : undefined)} onChange={handleChange} />
+              <span className={style.text_error}>{errors.name}</span>
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='background_image'>Imagen</label>
             <div>
-              <input name='background_image' value={input.background_image} onChange={handleChange} />
-              <span>{errors.background_image}</span>
+              <input name='background_image' value={input.background_image} className={errors.background_image.length ? style.error : (interacted.background_image ? style.success : undefined)} onChange={handleChange} />
+              <span className={style.text_error}>{errors.background_image}</span>
             </div>  
           </div>
           <div className={style.input}>
             <label htmlFor='description'>Descripción</label>
             <div>
-              <input name='description' value={input.description} onChange={handleChange} />
-              <span>{errors.description}</span>
+              <input name='description' value={input.description} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange} />
+              <span className={style.text_error}>{errors.description}</span>
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='platforms'>Plataformas</label>
             <div>
-              <select multiple onChange={handlePlatformChange} name='platforms'>
-                {PLATFORMS.map((platform, id) => (
+              <select multiple className={errors.platforms.length ? style.error : (interacted.platforms ? style.success : undefined)} onChange={handlePlatformChange} name='platforms'>
+                {allPlatforms.map((platform, id) => (
                   <option key={id} value={platform}>{platform}</option>
                 ))}
               </select>
-              <span>{errors.platforms}</span>
+              <span className={style.text_error}>{errors.platforms}</span>
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='released'>Fecha de lanzamiento</label>
             <div>
-              <input name='released' placeholder='aaaa-mm-dd'value={input.released} onChange={handleChange} />
-              <span>{errors.released}</span>
+              <input name='released' placeholder='aaaa-mm-dd' value={input.released} className={errors.released.length ? style.error : (interacted.released ? style.success : undefined)} onChange={handleChange} />
+              <span className={style.text_error}>{errors.released}</span>
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='rating'>Rating</label>
             <div>
-              <input type='number' name='rating' value={input.rating} onChange={handleChange} />
-              <span>{errors.rating}</span>
+              <input type='number' name='rating' value={input.rating} className={errors.rating.length ? style.error : (interacted.rating ? style.success : undefined)} onChange={handleChange} min="0" max="10"/>
+              <span className={style.text_error}>{errors.rating}</span>
             </div>  
           </div>
           <div className={style.input}>
             <label>Géneros</label>
             <div>
-              <select multiple onChange={handleGenreChange} name='genres'>
+              <select multiple className={errors.genres.length ? style.error : (interacted.genres ? style.success : undefined)}onChange={handleGenreChange} name='genres'>
                 {allGenres.map(genre => (
                   <option key={genre.id} value={genre.id}>{genre.name}</option>
                 ))}
               </select>
-              <span>{errors.genres}</span>
+              <span className={style.text_error}>{errors.genres}</span>
             </div>  
           </div>
         </div>
-        <button type='submit' className={style.submit} disabled={loading}>{loading ? 'Creando videojuego....' : 'Crear videojuego'}</button>
+        <button type='submit' className={style.submit} disabled={disable()}>
+          {loading ? 'Creando videojuego....' : 'Crear videojuego'}
+        </button>
       </form>
     </div>
     </>

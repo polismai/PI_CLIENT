@@ -29,10 +29,17 @@
   justify-content: space-around;
 }
 
+.select-container {
+  margin-left: 8px; 
+}
+
 .select {
   font-weight: bold;
   font-size: 14px;
   font-family: monospace;
   background-color: #aba1aa;
   border-radius: 5px;
+  margin-left: 8px; 
+  max-width: 100%;
+  width: auto;
 }
