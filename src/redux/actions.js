@@ -8,7 +8,9 @@ import {
   SET_CURRENT_PAGE, 
   GET_GENRES,
   GET_PLATFORMS,
-  SET_ERROR
+  SET_ERROR,
+  SET_SEARCH_STRING,
+  SET_ALL_VIDEOGAMES
 } from './action-types';
 import axios from 'axios';
 
@@ -26,6 +28,13 @@ export const getAllVideogames = () => {
       console.error('Error al cargar los videojuegos:', error)
       throw error;
     }
+  };
+};
+
+export const setSearchString = (searchString) => {
+  return {
+    type: SET_SEARCH_STRING,
+    payload: searchString,
   };
 };
 
@@ -48,6 +57,13 @@ export const getByName = (name) => {
       console.error('Error al cargar el videogame:', error);
       throw error;
     }
+  };
+};
+
+export const setAllVideogames = (videogames) => {
+  return {
+    type: SET_ALL_VIDEOGAMES,
+    payload: videogames,
   };
 };
 

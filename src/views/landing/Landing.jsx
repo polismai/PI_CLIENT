@@ -6,7 +6,7 @@ const Landing = () => {
   return (
     <div className={style.landing}>
       <h1>Videogames</h1>
-      <button onClick = {()=> navigate("/home")}>Ingresar</button>
+      <button onClick = {()=> navigate("/home")}>Play</button>
     </div>    
   );
 };

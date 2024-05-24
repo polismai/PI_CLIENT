@@ -4,28 +4,24 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Limita el ancho máximo de la tarjeta */
 }
 
 .card_description {
   flex: 1;
+  padding: 0 20px;
 }
 
 .card_image {
-  width: 50%;
+  width: 200px; /* Establece un ancho fijo para la imagen */
+  max-height: 200px; /* Limita la altura máxima de la imagen */
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   overflow: hidden;
 }
 
-.card_image img {
-  width: 50%; 
-  height: auto;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
 .section-container {
-  width: 50%;
+  width: 100%;
   padding: 10px;
   border-radius: 5px;
   box-sizing: border-box;
@@ -35,10 +31,12 @@
 }
 
 .section-container p {
+  margin: 0;
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
 .section-container p span {
-  margin-right: 10px; 
+  margin-right: 10px;
+  margin-bottom: 5px;
 }

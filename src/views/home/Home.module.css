@@ -18,20 +18,11 @@ body {
       monospace;
   }
   
-/* .home {
-    background-image: url('../../images/58916.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
-
 .title {
     margin-top: 75px;
     margin-bottom: 50px;
     font-size: 76px;
-    color: #ef2849;
+    color: #08449e;
     text-shadow: 0 4px 4px rgb(248, 248, 247);
     font-family: sans-serif;
 }
@@ -40,7 +31,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px 0 20px 0;
 }
 
 .pagination button {
@@ -55,6 +46,12 @@ body {
 
 .pagination button:hover {
   background-color: #0056b3;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  color: #999;
+  cursor: default;
 }
 
 .pagination span {

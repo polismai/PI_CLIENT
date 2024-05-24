@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import validate from './Validate';
-import { useNavigate } from 'react-router-dom';
 import MiniNavbar from '../../components/miniNavbar/MiniNavbar';
-import { useSelector, useDispatch } from 'react-redux';
 import { getAllGenres, getAllPlatforms } from '../../redux/actions';
 
 import style from './Create.module.css';
 
-
 const Create = () => {
 
-  const dispatch = useDispatch();
   const allGenres = useSelector((state) => state.allGenres);
   const allPlatforms = useSelector((state) => state.allPlatforms);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+ 
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -90,17 +89,6 @@ const Create = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // if (loading) {
-    //   return
-    // }
-
-    // const listaDeErrores = validate(input);
-    // setErrors(listaDeErrores);
-    // const hasErrors = Object.values(listaDeErrores).every(arr => Array.isArray(arr) && arr.length > 0);
-    // if (hasErrors) {
-    //   return;
-    // }
 
     try {
       setLoading(true);

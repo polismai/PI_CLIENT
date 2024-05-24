@@ -8,3 +8,5 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const GET_GENRES = 'GET_GENRES';
 export const GET_PLATFORMS = 'GET_PLATFORMS';
 export const SET_ERROR = 'ERROR';
+export const SET_SEARCH_STRING = 'SET_SEARCH_STRING';
+export const SET_ALL_VIDEOGAMES = 'SET_ALL_VIDEOGAMES';

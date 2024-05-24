@@ -59,6 +59,12 @@
     background-color: #0056b3; /* Cambia el color de fondo al pasar sobre el botón */
   }
   
+  .search_button:disabled {
+    background: #ccc;
+    color: #999;
+    cursor: default;
+  }
+
   .errorMessage {
     color: red; /* Color del mensaje de error */
     margin-top: 5px; /* Añade un poco de espacio arriba del mensaje */

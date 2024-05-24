@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getByName } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByName, setSearchString } from '../../redux/actions';
 
 import style from "./SearchBar.module.css";
 
 const SearchBar = () => {
   
   const dispatch = useDispatch();
-
-  const [searchString, setSearchString] = useState('');
+  const searchString = useSelector((state) => state.searchString);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
-    setSearchString(event.target.value);
+  const handleSearchChange = (event) => {
+    dispatch(setSearchString(event.target.value));
     setErrorMessage('');
   };
 
@@ -41,9 +40,9 @@ const SearchBar = () => {
           className={style.search_input} 
           placeholder='Escribe aqui el nombre del videojuego' 
           type='search'
-          onChange={handleChange}
+          onChange={handleSearchChange}
         />
-        <button className={style.search_button} type='submit' disabled={loading}>
+        <button className={style.search_button} type='submit' disabled={loading || searchString.trim() === ''}>
           {loading ? 'Buscando...' : 'Buscar'}
         </button>
       </form>

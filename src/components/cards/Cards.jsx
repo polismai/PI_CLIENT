@@ -1,5 +1,5 @@
-import style from './Cards.module.css';
 import Card from '../card/Card';
+import style from './Cards.module.css';
 
 const Cards = ({ allVideogames }) => {
   return (

@@ -9,7 +9,6 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const allVideogames = useSelector((state) => state.allVideogames);
-  const filteredVideogames = useSelector((state) => state.filteredVideogames);
   const allGenres = useSelector((state) => state.allGenres);
   const currentPage = useSelector((state) => state.currentPage);
   const pageSize = useSelector((state) => state.pageSize);
@@ -48,38 +47,27 @@ const Home = () => {
   const [paginatedVideogames, setPaginatedVideogames] = useState([]);
 
   useEffect(() => {
-    const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
-    const startIndex = (currentPage - 1) * pageSize; //Calculo el indice de inicio para la paginacion
-    const endIndex = Math.min(startIndex + pageSize, dataToPaginate.length);
-    const paginatedVideogames = dataToPaginate.slice(startIndex, endIndex); //Obtengo la porcion de videojuegos de la pagina actual
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedVideogames = allVideogames.slice(startIndex, endIndex);
     setPaginatedVideogames(paginatedVideogames);
 
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
+    const totalPages = Math.ceil(allVideogames.length / pageSize);
     setTotalPages(totalPages);
-  }, [filteredVideogames, allVideogames, currentPage, pageSize])
+  }, [allVideogames, currentPage, pageSize])
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      dispatch(setCurrentPage(page));
+    }
+  };
 
   const handleFirstPage = () => {
-    dispatch(setCurrentPage(1));
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      dispatch(setCurrentPage(currentPage - 1));
-    }
-  };
-
-  const handleNextPage = () => {
-    const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
-    if (currentPage < totalPages) {
-      dispatch(setCurrentPage(currentPage + 1));
-    }
+    goToPage(1);
   };
 
   const handleLastPage = () => {
-    const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
-    dispatch(setCurrentPage(totalPages));
+    goToPage(totalPages);
   };
 
   return (
@@ -93,10 +81,10 @@ const Home = () => {
       {paginatedVideogames.length > 0 && (
         <div className={style.pagination}>
           <button onClick={handleFirstPage} disabled={currentPage === 1}>Inicio</button>
-          <button onClick={handlePreviousPage} disabled={currentPage === 1}>Anterior</button>
+          <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
           <span>Pagina {currentPage} de {totalPages}</span>
-          <button onClick={handleNextPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Siguiente</button>
-          <button onClick={handleLastPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Última</button>
+          <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>Siguiente</button>
+          <button onClick={handleLastPage} disabled={currentPage === totalPages}>Última</button>
         </div>
       )}
     </div>

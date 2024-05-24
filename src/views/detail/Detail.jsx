@@ -9,19 +9,19 @@ const Detail = () => {
 
   const { id } = useParams();
   
-  const [detail, setDetail] = useState();
+  const [detail, setDetail] = useState({});
 
   useEffect(() => {
     const fetchDetail = async () => {
       const { data: { videogameDetail }} = await axios.get(`http://localhost:3001/videogames/${id}`);
-      if ({ videogameDetail }) {
+      if (videogameDetail) {
         setDetail(videogameDetail)
       } else {
         window.alert('No hay videojuegos con ese ID');
       }
     };
     fetchDetail();
-    setDetail();
+    setDetail({});
   }, [id]);
 
   if (detail) {
