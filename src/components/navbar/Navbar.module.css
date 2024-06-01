@@ -1,55 +1,36 @@
 .nav {
-  background-color: #7675776b;
-  padding: 8px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
+  flex: 1;
+  padding: 10px;
+  border-right: 3px solid black;
 }
 
 .nav button {
-  background-color: #aba1aa; 
-  color: #020000; 
-  font-size: 16px;
-  font-weight: bold;
-  border: none; 
-  border-radius: 5px; 
-  margin-left: 8px; 
-  cursor: pointer; 
-  transition: 0.2s;
+  font-family: "Press Start 2P", system-ui;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: 4px solid black;
+  background-color: #B8F71A;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Añade una transición suave a todos los cambios */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Agrega una sombra al botón */
+  margin: 6px 0;
+}
   
+.nav button:hover {
+  background-color: #00AB00;
+  transform: scale(1.05); /* Escala ligeramente el botón al pasar el cursor sobre él */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el cursor sobre el botón */
 }
 
 .nav button:hover {
   background-color: #79bf37dc; 
 }
 
-.containerSelect {
-  background-color: #76757740;
-  padding: 8px;
-  display: flex;
-flex-direction: column;
-align-items: flex-start;
-width: 200px;
-margin-top: 20px;
-}
-
-.select-container {
-  margin-left: 0;
-  margin-bottom: 8px;
-}
-
 .select {
   font-weight: bold;
   font-size: 14px;
-  font-family: monospace;
-  background-color: #aba1aa;
-  border-radius: 5px;
-  margin-left: 8px; 
-  max-width: 100%;
-  width: auto;
+  background-color: white;
+  width: 100%;
+  border: 3px solid black;;
 }

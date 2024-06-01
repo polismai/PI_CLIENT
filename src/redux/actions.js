@@ -1,6 +1,8 @@
 import { 
   GET_VG, 
   GET_BY_NAME, 
+  GET_DETAIL,
+  CLEAN_DETAIL,
   ORDER_ALPHABETIC, 
   ORDER_RATING, 
   FILTER_ORIGIN, 
@@ -13,12 +15,12 @@ import {
   SET_ALL_VIDEOGAMES
 } from './action-types';
 import axios from 'axios';
+import { URL_BASE } from '../constants';
 
 export const getAllVideogames = () => {
   return async (dispatch) => {
-    const endpoint = 'http://localhost:3001/videogames/';
     try {
-      const { data: { allVideogames }} = await axios.get(endpoint);
+      const { data: { allVideogames }} = await axios.get(URL_BASE);
     
       dispatch({
         type: GET_VG,
@@ -41,8 +43,7 @@ export const setSearchString = (searchString) => {
 export const getByName = (name) => {
   return async (dispatch) => {
     try {
-      const endpoint = `http://localhost:3001/videogames?name=${name}`;
-      const { data: { videogameByName }} = await axios.get(endpoint);
+      const { data: { videogameByName }} = await axios.get(`${URL_BASE}?name=${name}`);
 
       if (!videogameByName.length) {
         throw new Error('No se encontraron videojuegos con ese nombre');
@@ -50,7 +51,7 @@ export const getByName = (name) => {
 
       dispatch({
         type: GET_BY_NAME,
-        payload: { videogameByName, searchString: name },
+        payload: videogameByName,
       });
 
     } catch (error) {
@@ -64,6 +65,28 @@ export const setAllVideogames = (videogames) => {
   return {
     type: SET_ALL_VIDEOGAMES,
     payload: videogames,
+  };
+};
+
+export const getDetail = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data: { videogameDetail }} = await axios.get(`${URL_BASE}/${id}`);
+    
+      dispatch({
+        type: GET_DETAIL,
+        payload: videogameDetail,
+      });
+    } catch (error) {
+      console.error('Error al cargar el detalle del videojuego:', error)
+      throw error;
+    }
+  };
+};
+
+export const cleanDetail = () => {
+  return {
+    type: CLEAN_DETAIL
   };
 };
 
@@ -146,7 +169,7 @@ export const getAllGenres = () => {
  export const getAllPlatforms = () => {
   return async (dispatch) => {
     try {
-      const { data: { allVideogames }} = await axios.get('http://localhost:3001/videogames/')
+      const { data: { allVideogames }} = await axios.get(URL_BASE);
 
       const uniquePlatforms = new Set();
       allVideogames.forEach((game) => {

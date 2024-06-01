@@ -10,41 +10,44 @@ const validate = (input) => {
     genres: []
   };
 
-  if (input.name.trim() === '') {
-    rawErrors.name.push("Debe introducir un nombre")
+  if (!input.name.trim()) {
+    rawErrors.name.push("Debe introducir un nombre");
+  } else if (!/^[a-zA-Z\s-]+$/.test(input.name)) {
+    rawErrors.name.push("El nombre no puede contener simbolos");
   }
 
-  if (!/^[a-zA-Z\s-]+$/.test(input.name)) {
-    rawErrors.name.push("No puede contener simbolos")
-  }
-
-  if (input.background_image.trim() === '') {
+  if (!input.background_image.trim()) {
     rawErrors.background_image.push("Debe proporcionar una URL de imagen");
   } else if (!isValidUrl(input.background_image)) {
     rawErrors.background_image.push("La URL de la imagen no es válida");
   }
 
-  if (input.description.trim() === '') {
+  if (!input.description.trim()) {
     rawErrors.description.push("Debe proporcionar una descripción");
   }
 
-  if (input.platforms.length === 0) {
+  if (!input.platforms.length) {
     rawErrors.platforms.push("Debe especificar al menos una plataforma");
   }
 
-  if (input.released.trim() === '') {
+  if (!input.released.trim()) {
     rawErrors.released.push("Debe especificar una fecha de lanzamiento");
   } else if (!isValidDate(input.released)) {
     rawErrors.released.push("La fecha de lanzamiento no es válida");
   }
 
-  if (input.rating.trim() === '') {
+  if (!input.rating.trim()) {
     rawErrors.rating.push("Debe especificar un rating.");
-  } else if (isNaN(input.rating) || input.rating < 0 || input.rating > 10) {
-    rawErrors.rating.push("El rating debe ser un número entre 0 y 10");
+  } else {
+    const rating = parseFloat(input.rating);
+    if (isNaN(rating) || rating < 0 || rating > 10) {
+      rawErrors.rating.push("El rating debe ser un número entre 0 y 10");
+    } else if (!/^(\d{1,2}(\.\d{1,2})?)$/.test(input.rating)) {
+      rawErrors.rating.push("El rating puede tener hasta dos decimales");
+    }
   }
 
-  if (input.genres.length === 0) {
+  if (!input.genres.length) {
     rawErrors.genres.push("Debe seleccionar al menos un género");
   }
 

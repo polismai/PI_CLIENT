@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllVideogames, getAllGenres, setCurrentPage, setError } from '../../redux/actions';
 import Navbar from '../../components/navbar/Navbar';
 import Cards from '../../components/cards/Cards';
+import SearchBar from '../../components/searchBar/SearchBar'
+import Loader from '../../components/loader/Loader'
 import style from './Home.module.css';
 
 const Home = () => {
@@ -47,14 +49,19 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [paginatedVideogames, setPaginatedVideogames] = useState([]);
 
-  useEffect(() => {
+  const calculatePage = () => {
     const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
+    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
+    return { dataToPaginate, totalPages };
+  }
+
+  useEffect(() => {
+    const { dataToPaginate, totalPages } = calculatePage();
     const startIndex = (currentPage - 1) * pageSize; //Calculo el indice de inicio para la paginacion
     const endIndex = Math.min(startIndex + pageSize, dataToPaginate.length);
     const paginatedVideogames = dataToPaginate.slice(startIndex, endIndex); //Obtengo la porcion de videojuegos de la pagina actual
     setPaginatedVideogames(paginatedVideogames);
 
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
     setTotalPages(totalPages);
   }, [filteredVideogames, allVideogames, currentPage, pageSize])
 
@@ -69,36 +76,38 @@ const Home = () => {
   };
 
   const handleNextPage = () => {
-    const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
+    const { totalPages } = calculatePage();
     if (currentPage < totalPages) {
       dispatch(setCurrentPage(currentPage + 1));
     }
   };
 
   const handleLastPage = () => {
-    const dataToPaginate = filteredVideogames.length ? filteredVideogames : allVideogames;
-    const totalPages = Math.ceil(dataToPaginate.length / pageSize);
+    const { totalPages } = calculatePage();
     dispatch(setCurrentPage(totalPages));
   };
 
   return (
-    <div className={style.home}>
-      <h2 className={style.title}>Videogames</h2>
+    <div className={style.generalWrapper}>
       <Navbar />
+      <div className={style.home}>
+        <SearchBar />
+        <main>
+          {error && <div className={style.error}>{error}</div>}
+          {!error && (paginatedVideogames.length !== 0 && <Cards allVideogames={paginatedVideogames} />)} 
+          {!error && (paginatedVideogames.length === 0 && <Loader />)}
 
-      {!error && (paginatedVideogames.length !== 0 ? <Cards allVideogames={paginatedVideogames} /> : <span>CARGANDO...</span>)}
-      {error && <div>{error}</div>}
-
-      {paginatedVideogames.length > 0 && (
-        <div className={style.pagination}>
-          <button onClick={handleFirstPage} disabled={currentPage === 1}>Inicio</button>
-          <button onClick={handlePreviousPage} disabled={currentPage === 1}>Anterior</button>
-          <span>Pagina {currentPage} de {totalPages}</span>
-          <button onClick={handleNextPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Siguiente</button>
-          <button onClick={handleLastPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Última</button>
-        </div>
-      )}
+          {!error && paginatedVideogames.length > 0 && (
+            <div className={style.pagination}>
+              <button onClick={handleFirstPage} disabled={currentPage === 1}>Inicio</button>
+              <button onClick={handlePreviousPage} disabled={currentPage === 1}>Anterior</button>
+              <div>Pagina {currentPage} de {totalPages}</div>
+              <button onClick={handleNextPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Siguiente</button>
+              <button onClick={handleLastPage} disabled={currentPage === Math.ceil((filteredVideogames.length || allVideogames.length) / pageSize)}>Ultima</button>
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 };

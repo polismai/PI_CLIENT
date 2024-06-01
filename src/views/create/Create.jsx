@@ -135,28 +135,27 @@ const Create = () => {
     <>
     <MiniNavbar />
     <div className={style.formWrapper}>
-      <h2>Crear nuevo videojuego</h2>
       <form className={style.form} onSubmit={handleSubmit}> 
         <div className={style.container}>
           <div className={style.input}>
             <label htmlFor='name'>Nombre</label>
             <div>
               <input name='name' value={input.name} className={errors.name.length ? style.error : (interacted.name ? style.success : undefined)} onChange={handleChange} />
-              <span className={style.text_error}>{errors.name}</span>
+              {errors.name && <span className={style.text_error}>{errors.name}</span>}
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='background_image'>Imagen</label>
             <div>
               <input name='background_image' value={input.background_image} className={errors.background_image.length ? style.error : (interacted.background_image ? style.success : undefined)} onChange={handleChange} />
-              <span className={style.text_error}>{errors.background_image}</span>
+              {errors.background_image && <span className={style.text_error}>{errors.background_image}</span>}
             </div>  
           </div>
           <div className={style.input}>
             <label htmlFor='description'>Descripción</label>
             <div>
               <input name='description' value={input.description} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange} />
-              <span className={style.text_error}>{errors.description}</span>
+              {errors.description && <span className={style.text_error}>{errors.description}</span>}
             </div>
           </div>
           <div className={style.input}>
@@ -167,21 +166,21 @@ const Create = () => {
                   <option key={id} value={platform}>{platform}</option>
                 ))}
               </select>
-              <span className={style.text_error}>{errors.platforms}</span>
+              {errors.platforms && <span className={style.text_error}>{errors.platforms}</span>}
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='released'>Fecha de lanzamiento</label>
             <div>
               <input name='released' placeholder='aaaa-mm-dd' value={input.released} className={errors.released.length ? style.error : (interacted.released ? style.success : undefined)} onChange={handleChange} />
-              <span className={style.text_error}>{errors.released}</span>
+              {errors.released && <span className={style.text_error}>{errors.released}</span>}
             </div>
           </div>
           <div className={style.input}>
             <label htmlFor='rating'>Rating</label>
             <div>
               <input type='number' name='rating' value={input.rating} className={errors.rating.length ? style.error : (interacted.rating ? style.success : undefined)} onChange={handleChange} min="0" max="10"/>
-              <span className={style.text_error}>{errors.rating}</span>
+              {errors.rating && <span className={style.text_error}>{errors.rating}</span>}
             </div>  
           </div>
           <div className={style.input}>
@@ -192,7 +191,7 @@ const Create = () => {
                   <option key={genre.id} value={genre.id}>{genre.name}</option>
                 ))}
               </select>
-              <span className={style.text_error}>{errors.genres}</span>
+              {errors.genres && <span className={style.text_error}>{errors.genres}</span>}
             </div>  
           </div>
         </div>

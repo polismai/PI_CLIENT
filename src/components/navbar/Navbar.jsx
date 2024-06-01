@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender, setAllVideogames } from '../../redux/actions';
-import SearchBar from '../searchBar/SearchBar';
 import { ORDERS, TYPES } from '../../constants';
 
 import style from './Navbar.module.css';
@@ -40,51 +39,48 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <div className={style.nav}> 
-        <SearchBar />  
-        <div className={style.containerSelect}>
-          <div className={style.selectContainer}>
-            <select className={style.select} onChange={handleFilterByOrigin}>
-              <option>Seleccionar por Origen</option>
-              <option value={TYPES.ALL}>Todos</option>
-              <option value='false'>Api</option>
-              <option value='true'>BDD</option>
-            </select>
-          </div>
-          <div className={style.selectContainer}>
-            <select className={style.select} onChange={handleFilterByGender}>
-              <option>Seleccionar por Géneros</option>
-              <option value={TYPES.ALL}>Todos</option>
-              {allGenres.map(genre => (
-                <option key={genre.id} value={genre.name}>{genre.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className={style.selectContainer}>
-            <select className={style.select} onChange={handleOrderByRating}>
-              <option>Ordenar por Rating</option>
-              <option value={ORDERS.A}>Ascendente</option>
-              <option value={ORDERS.D}>Descendente</option>
-            </select>
-          </div>
-          <div className={style.selectContainer}>
-            <select className={style.select} onChange={handleOrderByAlphabetic}>
-              <option>Ordenar Alfabéticamente</option>
-              <option value={ORDERS.A}>A-Z</option>
-              <option value={ORDERS.D}>Z-A</option>
-            </select>
-          </div>
+    <nav className={style.nav}>
+      
+      <button onClick = {()=> navigate("/create")}>Crear videojuego</button>
+      
+      {allVideogames.length !== 0 && (
+        <div>
+          <select className={style.select} onChange={handleFilterByOrigin}>
+            <option>Seleccionar por Origen</option>
+            <option value={TYPES.ALL}>Todos</option>
+            <option value='false'>Api</option>
+            <option value='true'>BDD</option>
+          </select>
+
+          <select className={style.select} onChange={handleFilterByGender}>
+            <option>Seleccionar por Géneros</option>
+            <option value={TYPES.ALL}>Todos</option>
+            {allGenres.map(genre => (
+              <option key={genre.id} value={genre.name}>{genre.name}</option>
+            ))}
+          </select>
+
+          <select className={style.select} onChange={handleOrderByRating}>
+            <option>Ordenar por Rating</option>
+            <option value={ORDERS.A}>Ascendente</option>
+            <option value={ORDERS.D}>Descendente</option>
+          </select>
+
+          <select className={style.select} onChange={handleOrderByAlphabetic}>
+            <option>Ordenar Alfabéticamente</option>
+            <option value={ORDERS.A}>A-Z</option>
+            <option value={ORDERS.D}>Z-A</option>
+          </select>
         </div>
-        <button onClick = {()=> navigate("/create")}>Crear videojuego</button>
-      </div>
-      {showSearchText && searchString !== '' && 
-      <div>
-        <p>Nombre buscado: {searchString}</p>
-        <button onClick={handleSetAllVideogames}>Limpiar búsqueda</button>
-      </div>
-      }   
-    </>
+      )}
+
+      {showSearchText && searchString !== '' && (
+        <div>
+          <p>Nombre buscado: {searchString}</p>
+          <button onClick={handleSetAllVideogames}>Limpiar búsqueda</button>
+        </div>
+      )}
+    </nav>
   );
 };
 

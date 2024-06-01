@@ -5,7 +5,7 @@ const Landing = () => {
   const navigate = useNavigate();
   return (
     <div className={style.landing}>
-      <h1>Videogames</h1>
+      <h1>VIDEOGAMES</h1>
       <button onClick = {()=> navigate("/home")}>Play</button>
     </div>    
   );

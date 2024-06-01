@@ -1,129 +1,67 @@
 .formWrapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin: 24px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
   
-  /* .logo {
-    width: 400px;
-    display: flex;
-    margin-bottom: 24px;
-  } */
-  
-  .form {
-      display: flex;
-      flex-direction: column;
-      width: 400px; 
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-  
-    .container {
-      margin: 24px;
-    }
-    
-    .input {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-    }
-  
-    /* .boton {
-      margin-left: 3px;
-      border: 0;
-      background-color: transparent;
-    } */
-  
-    /* .errorSpan {
-      display: block;
-      font-size: 11px;
-      color: red;
-    }
-   */
+.form {
+  border: 3px solid black;
+  width: 400px;  
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
 
-   input, select {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 5px;
-  }
+.input {
+  margin-bottom: 20px;
+}
 
-  select[multiple] {
-    height: auto;
-  }
-  
-  input:focus, select:focus {
-    outline: none;
-    border-color: #007bff; /* Cambia el color del borde al enfocar */
-  }
-  
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .submit {
-    margin: 12px;
-    border: 0;
-    background-color: #007bff; 
-    color: white;
-    font-weight: bold;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 16px;
-    cursor: pointer; 
-  }
-  
-  .submit:hover {
-    background-color: #0056b3; 
-  }
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 3px solid black;
+  margin: 5px 20px 2px 0;
+}
 
-  .submit:disabled {
-    background: #ccc;
-    color: #999;
-    cursor: default;
-  }
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-  .success {
-    border: 1px solid green;
-  }
-
-  .error {
-    border: 1px solid red;
-  }
-
-  .text_error {
-    color: red
-  }
-    /* .submit {
-      margin: 12px;
-      border: 0;
-      background-color: black;
-      color: white;
-      font-weight: bold;
-      border-radius: 12px;
-      padding: 6px;
-      font-size: 16px;
-    }
-   */
-    /* .submit:disabled {
-      background: #ccc;
-      color: #999;
-    }
+.submit {
+  font-family: "Press Start 2P", system-ui;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: 4px solid black;
+  background-color: #B8F71A;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Añade una transición suave a todos los cambios */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Agrega una sombra al botón */
+}
   
-    .success {
-      border: 1px solid green;
-    }
-  
-    .error {
-      border: 1px solid red;
-    }
-    
-    .errorMessage {
-      color: red;
-      display: flex;
-      justify-content: center;
-    } */
+.submit:hover {
+  background-color: #00AB00;
+  transform: scale(1.05); /* Escala ligeramente el botón al pasar el cursor sobre él */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el cursor sobre el botón */
+}
+
+.submit:disabled {
+  background: #ccc;
+  color: #999;
+  cursor: default;
+}
+
+.success {
+  border: 3px solid green;
+}
+
+.error {
+  border: 3px solid red;
+}
+
+.text_error {
+  color: red;
+}

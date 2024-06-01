@@ -1,116 +1,38 @@
-/* .landing {
-    background-color: #7cabdd;
-    text-align: center;
-    margin-top: 100px;
-}
-
-.landing h1 {
-    font-size: 36px;
-    color: #333;
-}
-
-.landing button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.landing button:hover {
-    background-color: #0056b3;
-} */
-
 .landing {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url('../../images/4884451.jpg'); /* Ruta de tu imagen de fondo */
-    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
-    background-position: center; /* Centra la imagen en el fondo */
-    color: #fff; /* Cambia el color del texto para que contraste con la imagen de fondo */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: auto;
+  background-image: url('../../images/fondo\ de\ mario\ bros.jpeg'); /* Ruta de tu imagen de fondo */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+  background-position: center; /* Centra la imagen en el fondo */
+  color: #fff; /* Cambia el color del texto para que contraste con la imagen de fondo */
+}
   
 .landing h1 {
-  font-size: 6rem;
-  margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.3);
-  text-shadow: 0 0 10px #00ffff, 
-               0 0 20px #00ffff,
-               0 0 30px #00ffff,
-               0 0 40px #00ffff,
-               0 0 70px #00ffff,
-               0 0 80px #00ffff,
-               0 0 100px #00ffff,
-               0 0 150px #00ffff,
-               0 0 200px #00ffff,
-               0 0 250px #00ffff;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: neonAnimation 1.5s infinite alternate;
-}
-
-@keyframes neonAnimation {
-  from {
-    text-shadow: 0 0 10px #00ffff, 
-                 0 0 20px #00ffff, 
-                 0 0 30px #00ffff, 
-                 0 0 40px #00ffff, 
-                 0 0 70px #00ffff, 
-                 0 0 80px #00ffff, 
-                 0 0 100px #00ffff, 
-                 0 0 150px #00ffff, 
-                 0 0 200px #00ffff, 
-                 0 0 250px #00ffff;
-  }
-  to {
-    text-shadow: 0 0 20px #ff00ff, 
-                 0 0 30px #ff00ff, 
-                 0 0 40px #ff00ff, 
-                 0 0 70px #ff00ff, 
-                 0 0 80px #ff00ff, 
-                 0 0 100px #ff00ff, 
-                 0 0 150px #ff00ff, 
-                 0 0 200px #ff00ff, 
-                 0 0 250px #ff00ff;
-  }
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 48px;
+  letter-spacing: 3px;
 }
     
-landing button {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease; /* Añade una transición suave a todos los cambios */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Agrega una sombra al botón */
-  }
+.landing button {
+  font-family: "Press Start 2P", system-ui;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: 4px solid black;
+  background-color: #B8F71A;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Añade una transición suave a todos los cambios */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Agrega una sombra al botón */
+}
   
 .landing button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Escala ligeramente el botón al pasar el cursor sobre él */
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el cursor sobre el botón */
+  background-color: #00AB00;
+  transform: scale(1.05); /* Escala ligeramente el botón al pasar el cursor sobre él */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el cursor sobre el botón */
 }
-
-
-  /* .landing button {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff; 
-    color: #fff; 
-    cursor: pointer;
-    transition: background-color 0.3s ease; 
-  }
-  
-  .landing button:hover {
-    background-color: #0056b3; 
-  } */

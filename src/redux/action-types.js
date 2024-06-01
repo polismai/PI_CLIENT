@@ -1,5 +1,7 @@
 export const GET_VG = 'GET_VG';
 export const GET_BY_NAME = 'GET_BY_NAME';
+export const GET_DETAIL = 'GET_DETAIL';
+export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 export const ORDER_RATING = 'ORDER_RATING';
 export const ORDER_ALPHABETIC = 'ORDER_ALPHABETIC';
 export const FILTER_ORIGIN = 'FILTER_ORIGIN';

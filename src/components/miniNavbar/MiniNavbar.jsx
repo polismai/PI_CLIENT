@@ -7,7 +7,7 @@ const MiniNavbar = () => {
   return (
     <div>
       <div className={style.nav}>
-          <button onClick = {()=> navigate("/home")}>Home</button>  
+          <button onClick = {()=> navigate("/home")}>Atras</button>  
       </div>
     </div>
   )
