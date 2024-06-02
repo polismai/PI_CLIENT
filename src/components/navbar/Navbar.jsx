@@ -52,8 +52,8 @@ const Navbar = () => {
         <div>
           <select className={style.select} onChange={handleFilterByOrigin} disabled={selectedOriginValue !== DEFAULT_VALUE} value={selectedOriginValue}>
             <option value={DEFAULT_VALUE}>Seleccionar por Origen</option>
-            <option value='false'>Api</option>
-            <option value='true'>BDD</option>
+            <option value='false'>API</option>
+            <option value='true'> Base de Datos</option>
           </select>
 
           <select className={style.select} onChange={handleFilterByGender} disabled={selectedGenderValue !== DEFAULT_VALUE} value={selectedGenderValue}>

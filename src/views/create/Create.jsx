@@ -152,7 +152,10 @@ const Create = () => {
           <div className={style.input}>
             <label htmlFor='description'>Descripción</label>
             <div>
-              <input name='description' value={input.description} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange} />
+              <textarea name='description' rows={10} style={{width: "100%"}} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange}>
+                {input.description}
+              </textarea>
+              {/* <input name='description' value={input.description} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange} /> */}
               {errors.description && <span className={style.text_error}>{errors.description}</span>}
             </div>
           </div>
