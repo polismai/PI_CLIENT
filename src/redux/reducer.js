@@ -12,9 +12,12 @@ import {
   SET_ALL_VIDEOGAMES, 
   SET_SEARCH_STRING, 
   GET_DETAIL,
-  CLEAN_DETAIL } from './action-types';
+  CLEAN_DETAIL,
+  SET_ORIGIN_VALUE,
+  SET_GENDER_VALUE
+} from './action-types';
 
-  import { ORDERS, TYPES } from '../constants';
+import { ORDERS, DEFAULT_VALUE } from '../constants';
 
 const initialState = {
   allVideogames: [],
@@ -26,6 +29,8 @@ const initialState = {
   allPlatforms: [],
   searchString: '',
   error: '',
+  selectedOriginValue: DEFAULT_VALUE,
+  selectedGenderValue: DEFAULT_VALUE
 };
 
 const convertToBoolean = (value) => {
@@ -164,6 +169,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
+    case SET_ORIGIN_VALUE:
+      return {
+        ...state,
+        selectedOriginValue: action.payload
+      }
+    case SET_GENDER_VALUE:
+      return {
+        ...state,
+        selectedGenderValue: action.payload
+      }
     default:
       return {...state};
   }

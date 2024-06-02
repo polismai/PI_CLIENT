@@ -1,24 +1,20 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender, setAllVideogames, setSearchString } from '../../redux/actions';
-import { ORDERS } from '../../constants';
+import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender, setAllVideogames, setSearchString, setSelectedOriginValue, setSelectedGenderValue } from '../../redux/actions';
+import { ORDERS, DEFAULT_VALUE } from '../../constants';
 
 import style from './Navbar.module.css';
-
-const DEFAULT_VALUE = 'default';
 
 const Navbar = () => {
 
   const allGenres = useSelector((state) => state.allGenres);
   const allVideogames = useSelector((state) => state.allVideogames);
   const searchString = useSelector((state) => state.searchString);
+  const selectedOriginValue = useSelector((state) => state.selectedOriginValue);
+  const selectedGenderValue = useSelector((state) => state.selectedGenderValue);
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const [selectedOriginValue, setSelectedOriginValue] = useState(DEFAULT_VALUE);
-  const [selectedGenderValue, setSelectedGenderValue] = useState(DEFAULT_VALUE);
   
   const handleOrderByRating = (event) => {
     dispatch(orderByRating(event.target.value));
@@ -30,20 +26,20 @@ const Navbar = () => {
 
   const handleFilterByOrigin = (event) => {
     const value = event.target.value;
-    setSelectedOriginValue(value);
+    dispatch(setSelectedOriginValue(value));
     dispatch(filterByOrigin(value));
   };
 
   const handleFilterByGender = (event) => {
     const value = event.target.value;
-    setSelectedGenderValue(value);
+    dispatch(setSelectedGenderValue(value));
     dispatch(filterByGender(value));
   };
 
   const handleSetAllVideogames = () => {
     dispatch(setAllVideogames(allVideogames));
-    setSelectedOriginValue(DEFAULT_VALUE);
-    setSelectedGenderValue(DEFAULT_VALUE);
+    dispatch(setSelectedOriginValue(DEFAULT_VALUE));
+    dispatch(setSelectedGenderValue(DEFAULT_VALUE));
     setSearchString('');
   };
 

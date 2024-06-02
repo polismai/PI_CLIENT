@@ -12,7 +12,9 @@ import {
   GET_PLATFORMS,
   SET_ERROR,
   SET_SEARCH_STRING,
-  SET_ALL_VIDEOGAMES
+  SET_ALL_VIDEOGAMES,
+  SET_ORIGIN_VALUE,
+  SET_GENDER_VALUE
 } from './action-types';
 import axios from 'axios';
 import { URL_BASE } from '../constants';
@@ -164,9 +166,9 @@ export const getAllGenres = () => {
       throw error
     }
   };
- };
+};
 
- export const getAllPlatforms = () => {
+export const getAllPlatforms = () => {
   return async (dispatch) => {
     try {
       const { data: { allVideogames }} = await axios.get(URL_BASE);
@@ -187,11 +189,25 @@ export const getAllGenres = () => {
       console.error('Error al obtener las plataformas:', error);
     }
   };
- };
+};
 
- export const setError = (error) => {
+export const setError = (error) => {
   return {
-     type: SET_ERROR,
-     payload: error
+    type: SET_ERROR,
+    payload: error
+  };
+};
+
+export const setSelectedOriginValue = (value) => {
+  return {
+     type: SET_ORIGIN_VALUE,
+     payload: value
+  };
+};
+
+export const setSelectedGenderValue = (value) => {
+  return {
+     type: SET_GENDER_VALUE,
+     payload: value
   };
 };
