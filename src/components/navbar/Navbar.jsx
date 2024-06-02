@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender, setAllVideogames } from '../../redux/actions';
-import { ORDERS, TYPES } from '../../constants';
+import { orderByAlphabetic, orderByRating, filterByOrigin, filterByGender, setAllVideogames, setSearchString } from '../../redux/actions';
+import { ORDERS } from '../../constants';
 
 import style from './Navbar.module.css';
+
+const DEFAULT_VALUE = 'default';
 
 const Navbar = () => {
 
@@ -15,7 +17,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const [showSearchText, setShowSearchText] = useState(true);
+  const [selectedOriginValue, setSelectedOriginValue] = useState(DEFAULT_VALUE);
+  const [selectedGenderValue, setSelectedGenderValue] = useState(DEFAULT_VALUE);
   
   const handleOrderByRating = (event) => {
     dispatch(orderByRating(event.target.value));
@@ -26,56 +29,64 @@ const Navbar = () => {
   };
 
   const handleFilterByOrigin = (event) => {
-    dispatch(filterByOrigin(event.target.value));
+    const value = event.target.value;
+    setSelectedOriginValue(value);
+    dispatch(filterByOrigin(value));
   };
 
   const handleFilterByGender = (event) => {
-    dispatch(filterByGender(event.target.value));
+    const value = event.target.value;
+    setSelectedGenderValue(value);
+    dispatch(filterByGender(value));
   };
 
   const handleSetAllVideogames = () => {
     dispatch(setAllVideogames(allVideogames));
-    setShowSearchText(false);
+    setSelectedOriginValue(DEFAULT_VALUE);
+    setSelectedGenderValue(DEFAULT_VALUE);
+    setSearchString('');
   };
 
   return (
     <nav className={style.nav}>
       
-      <button onClick = {()=> navigate("/create")}>Crear videojuego</button>
+      <button onClick={()=> navigate("/create")}>Crear videojuego</button>
       
       {allVideogames.length !== 0 && (
         <div>
-          <select className={style.select} onChange={handleFilterByOrigin}>
-            <option>Seleccionar por Origen</option>
-            <option value={TYPES.ALL}>Todos</option>
+          <select className={style.select} onChange={handleFilterByOrigin} disabled={selectedOriginValue !== DEFAULT_VALUE} value={selectedOriginValue}>
+            <option value={DEFAULT_VALUE}>Seleccionar por Origen</option>
             <option value='false'>Api</option>
             <option value='true'>BDD</option>
           </select>
 
-          <select className={style.select} onChange={handleFilterByGender}>
-            <option>Seleccionar por Géneros</option>
-            <option value={TYPES.ALL}>Todos</option>
+          <select className={style.select} onChange={handleFilterByGender} disabled={selectedGenderValue !== DEFAULT_VALUE} value={selectedGenderValue}>
+            <option value={DEFAULT_VALUE}>Seleccionar por Géneros</option>
             {allGenres.map(genre => (
               <option key={genre.id} value={genre.name}>{genre.name}</option>
             ))}
           </select>
 
           <select className={style.select} onChange={handleOrderByRating}>
-            <option>Ordenar por Rating</option>
+            <option value="default">Ordenar por Rating</option>
             <option value={ORDERS.A}>Ascendente</option>
             <option value={ORDERS.D}>Descendente</option>
           </select>
 
           <select className={style.select} onChange={handleOrderByAlphabetic}>
-            <option>Ordenar Alfabéticamente</option>
+            <option value="default">Ordenar Alfabéticamente</option>
             <option value={ORDERS.A}>A-Z</option>
             <option value={ORDERS.D}>Z-A</option>
           </select>
+
+          {(selectedOriginValue !== DEFAULT_VALUE || selectedGenderValue !== DEFAULT_VALUE) &&
+            <button onClick={handleSetAllVideogames}>Eliminar filtros</button>
+          }   
         </div>
       )}
 
-      {showSearchText && searchString !== '' && (
-        <div>
+      {searchString !== '' && (
+        <div style={{fontFamily: 'arial'}}>
           <p>Nombre buscado: {searchString}</p>
           <button onClick={handleSetAllVideogames}>Limpiar búsqueda</button>
         </div>

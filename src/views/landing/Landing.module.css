@@ -5,7 +5,7 @@
   justify-content: center;
   height: 100vh;
   width: auto;
-  background-image: url('../../images/fondo\ de\ mario\ bros.jpeg'); /* Ruta de tu imagen de fondo */
+  background-image: url('../../images/background.jpeg'); /* Ruta de tu imagen de fondo */
   background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
   background-position: center; /* Centra la imagen en el fondo */
   color: #fff; /* Cambia el color del texto para que contraste con la imagen de fondo */

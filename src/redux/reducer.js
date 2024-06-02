@@ -92,74 +92,57 @@ const rootReducer = (state = initialState, action) => {
         currentPage: 1,
       };
     case FILTER_ORIGIN: 
-      if (action.payload === TYPES.ALL) {
-        return { 
-          ...state, 
-          filteredVideogames: [],
-          currentPage: 1,
-        };
-      } else {
-        let filteredByOrigin;
+      let filteredByOrigin;
 
-        if (state.searchString !== '') {
-          filteredByOrigin = state.filteredVideogames.filter((videogame) => 
-            videogame.created === convertToBoolean(action.payload)
-          );
-        } else if (state.filteredVideogames.length > 0) {
-          filteredByOrigin = state.filteredVideogames.filter((videogame) => 
-            videogame.created === convertToBoolean(action.payload)
-          );
-        } else {
-          filteredByOrigin = state.allVideogames.filter((videogame) => 
-            videogame.created === convertToBoolean(action.payload)
-          );
-        }  
-        return {
-          ...state,
-          filteredVideogames: filteredByOrigin,
-          currentPage: 1,
-        };
+      if (state.searchString !== '') {
+        filteredByOrigin = state.filteredVideogames.filter((videogame) => 
+          videogame.created === convertToBoolean(action.payload)
+        );
+      } else if (state.filteredVideogames.length > 0) {
+        filteredByOrigin = state.filteredVideogames.filter((videogame) => 
+          videogame.created === convertToBoolean(action.payload)
+        );
+      } else {
+        filteredByOrigin = state.allVideogames.filter((videogame) => 
+          videogame.created === convertToBoolean(action.payload)
+        );
+      }  
+      return {
+        ...state,
+        filteredVideogames: filteredByOrigin,
+        currentPage: 1,
       };
     case FILTER_GENDER:
-      if (action.payload === TYPES.ALL) {
+      let filteredByGenre;
+
+      if (state.searchString !== '') {
+        filteredByGenre = state.filteredVideogames.filter((videogame) => 
+          videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
+        );
+      } else if (state.filteredVideogames.length > 0) {
+        filteredByGenre = state.filteredVideogames.filter((videogame) => 
+          videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
+        );
+      } else {
+        filteredByGenre = state.allVideogames.filter((videogame) =>
+        videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
+        );
+      }
+
+      if (!filteredByGenre.length) {
         return {
           ...state,
           filteredVideogames: [],
+          currentPage: 1,
+          error: 'No se encontraron videojuegos para ese género'
+        };
+      } else {
+        return {
+          ...state,
+          filteredVideogames: filteredByGenre,
           currentPage: 1,
           error: ''
         };
-      } else {
-        let filteredByGenre;
-
-        if (state.searchString !== '') {
-          filteredByGenre = state.filteredVideogames.filter((videogame) => 
-            videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
-          );
-        } else if (state.filteredVideogames.length > 0) {
-          filteredByGenre = state.filteredVideogames.filter((videogame) => 
-            videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
-          );
-        } else {
-          filteredByGenre = state.allVideogames.filter((videogame) =>
-          videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
-          );
-        }
-
-        if (!filteredByGenre.length) {
-          return {
-            ...state,
-            filteredVideogames: [],
-            currentPage: 1,
-            error: 'No se encontraron videojuegos para ese género'
-          };
-        } else {
-          return {
-            ...state,
-            filteredVideogames: filteredByGenre,
-            currentPage: 1,
-            error: ''
-          };
-        }
       }
     case SET_CURRENT_PAGE:
       return {

@@ -95,8 +95,6 @@ const Create = () => {
       const response = await axios.post('http://localhost:3001/videogames', input);
       const videogameID = response.data.newId;
 
-      console.log('Nuevo videojuego creado con ID:', videogameID);
-
       setLoading(false);
       navigate(`/detail/${videogameID}`);
     } catch (error) {
