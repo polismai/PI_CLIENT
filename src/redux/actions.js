@@ -29,8 +29,7 @@ export const getAllVideogames = () => {
         payload: allVideogames,
       });
     } catch (error) {
-      console.error('Error al cargar los videojuegos:', error)
-      throw error;
+      throw new Error('Error al cargar los videojuegos: ' + error.message);
     }
   };
 };
@@ -57,8 +56,7 @@ export const getByName = (name) => {
       });
 
     } catch (error) {
-      console.error('Error al cargar el videogame:', error);
-      throw error;
+      throw new Error('Error al cargar el videogame:', error.message);
     }
   };
 };
@@ -80,8 +78,7 @@ export const getDetail = (id) => {
         payload: videogameDetail,
       });
     } catch (error) {
-      console.error('Error al cargar el detalle del videojuego:', error)
-      throw error;
+      throw new Error('Error al cargar el detalle del videojuego: ' + error.message);
     }
   };
 };
@@ -100,7 +97,7 @@ export const orderByRating = (order_rating) => {
         payload: order_rating
       })
     } catch (error) {
-      console.log("error")
+      throw new Error('Error al ordenar por rating: ' + error.message);
     }
   };
 };
@@ -113,7 +110,7 @@ export const orderByAlphabetic = (order_alphabetic) => {
         payload: order_alphabetic
       })
     } catch (error) {
-      console.log("error")
+      throw new Error('Error al ordenar alfabéticamente: ' + error.message);
     }
   };
 };
@@ -126,7 +123,7 @@ export const filterByOrigin = (origin) => {
         payload: origin
       })
     } catch (error) {
-      console.log("error")
+      throw new Error("Hubo un error al filtrar por origen: " + error.message);
     }
   };
 };
@@ -139,7 +136,7 @@ export const filterByGender = (gender) => {
         payload: gender
       })
     } catch (error) {
-      console.log("error")
+      throw new Error("Hubo un error al filtrar por género: " + error.message);
     }
   };
 };
@@ -162,8 +159,7 @@ export const getAllGenres = () => {
         payload: allGenres,
       })
     } catch (error) {
-      console.error('Error al cargar los generos:', error)
-      throw error
+      throw new Error('Error al cargar los géneros: ' + error.message);
     }
   };
 };
@@ -186,7 +182,7 @@ export const getAllPlatforms = () => {
         payload: allPlatforms
       });
     } catch (error) {
-      console.error('Error al obtener las plataformas:', error);
+      throw new Error('Error al obtener las plataformas: ' + error.message);
     }
   };
 };

@@ -18,7 +18,7 @@ const Detail = () => {
       try {
         await dispatch(getDetail(id));
       } catch (error) {
-        console.error('Error al cargar el detalle:', error);
+        throw new Error('Error al cargar el detalle:', error.message);
       }
     };
     fetchDetail();

@@ -23,7 +23,7 @@ const Home = () => {
         await dispatch(getAllVideogames());
       } catch (error) {
         dispatch(setError('Error al cargar los videojuegos'));
-        console.error('Error al cargar los videojuegos:', error);
+        throw new Error('Error al cargar los videojuegos:', error.message);
       }
     };
 
@@ -37,7 +37,7 @@ const Home = () => {
       try {
         await dispatch(getAllGenres());
       } catch (error) {
-        console.error('Error al cargar los generos:', error);
+        throw new Error('Error al cargar los generos:', error.message);
       }
     };
 

@@ -61,6 +61,7 @@ const rootReducer = (state = initialState, action) => {
         filteredVideogames: [],
         currentPage: 1,
         searchString: '',
+        error: ''
       };
     case GET_DETAIL:
       return {
@@ -116,6 +117,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         filteredVideogames: filteredByOrigin,
         currentPage: 1,
+        error: filteredByOrigin.length ? '' : "No se encontraron videojuegos"
       };
     case FILTER_GENDER:
       let filteredByGenre;
@@ -133,22 +135,12 @@ const rootReducer = (state = initialState, action) => {
         videogame.genres && videogame.genres.some(genre => genre.name === action.payload)
         );
       }
-
-      if (!filteredByGenre.length) {
-        return {
-          ...state,
-          filteredVideogames: [],
-          currentPage: 1,
-          error: 'No se encontraron videojuegos para ese género'
-        };
-      } else {
-        return {
-          ...state,
-          filteredVideogames: filteredByGenre,
-          currentPage: 1,
-          error: ''
-        };
-      }
+      return {
+        ...state,
+        filteredVideogames: filteredByGenre,
+        currentPage: 1,
+        error: filteredByGenre.length ? '' : 'No se encontraron videojuegos para ese género'
+      };
     case SET_CURRENT_PAGE:
       return {
         ...state,

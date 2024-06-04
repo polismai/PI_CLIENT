@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import validate from './Validate';
 import MiniNavbar from '../../components/miniNavbar/MiniNavbar';
-import { getAllGenres, getAllPlatforms } from '../../redux/actions';
+import { getAllGenres, getAllPlatforms, getAllVideogames } from '../../redux/actions';
 
 import style from './Create.module.css';
 
@@ -21,7 +21,7 @@ const Create = () => {
       try {
         await dispatch(getAllGenres());
       } catch (error) {
-        console.error('Error al cargar los generos:', error);
+        throw new Error('Error al cargar los generos:', error.message);
       }
     };
 
@@ -33,7 +33,7 @@ const Create = () => {
       try {
         await dispatch(getAllPlatforms());
       } catch (error) {
-        console.error('Error al cargar las plataformas:', error);
+        throw new Error('Error al cargar las plataformas:', error.message);
       }
     };
 
@@ -96,10 +96,11 @@ const Create = () => {
       const videogameID = response.data.newId;
 
       setLoading(false);
+      dispatch(getAllVideogames());
       navigate(`/detail/${videogameID}`);
     } catch (error) {
       setLoading(false);
-      console.error('Error al crear el nuevo videojuego:', error);
+      throw new Error('Error al crear el nuevo videojuego:', error.message);
     }
   };
   
@@ -152,10 +153,8 @@ const Create = () => {
           <div className={style.input}>
             <label htmlFor='description'>Descripción</label>
             <div>
-              <textarea name='description' rows={10} style={{width: "100%"}} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange}>
-                {input.description}
+              <textarea name='description' value={input.description} rows={10} style={{width: "100%"}} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange}>
               </textarea>
-              {/* <input name='description' value={input.description} className={errors.description.length ? style.error : (interacted.description ? style.success : undefined)} onChange={handleChange} /> */}
               {errors.description && <span className={style.text_error}>{errors.description}</span>}
             </div>
           </div>
@@ -180,7 +179,7 @@ const Create = () => {
           <div className={style.input}>
             <label htmlFor='rating'>Rating</label>
             <div>
-              <input type='number' name='rating' value={input.rating} className={errors.rating.length ? style.error : (interacted.rating ? style.success : undefined)} onChange={handleChange} min="0" max="10"/>
+              <input type='number' name='rating' value={input.rating} className={errors.rating.length ? style.error : (interacted.rating ? style.success : undefined)} onChange={handleChange} />
               {errors.rating && <span className={style.text_error}>{errors.rating}</span>}
             </div>  
           </div>
