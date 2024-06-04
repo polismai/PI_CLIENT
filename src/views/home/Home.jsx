@@ -30,7 +30,7 @@ const Home = () => {
     if (!allVideogames.length) {
       fetchData();
     }
-  }, [dispatch, allVideogames]);
+  }, [allVideogames]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -44,7 +44,7 @@ const Home = () => {
     if (!allGenres.length) {
       fetchGenres();
     }
-  }, [dispatch, allGenres]);
+  }, [allGenres]);
     
   const [totalPages, setTotalPages] = useState(0);
   const [paginatedVideogames, setPaginatedVideogames] = useState([]);

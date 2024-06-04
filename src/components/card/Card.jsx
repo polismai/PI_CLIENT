@@ -4,12 +4,10 @@ import style from './Card.module.css';
 const Card = ({ videogame }) => {
   const { id, name, background_image, genres, rating } = videogame;
 
-  const cardStyle = {
-    backgroundImage: `url(${background_image})`,
-  };
-
   return (
-    <Link to={`/detail/${id}`} className={style.card} style={cardStyle}>
+    <Link to={`/detail/${id}`} className={style.card} style={{
+      backgroundImage: `url(${background_image})`,
+    }}>
       <div className={style.overlay}>
         <div className={style.info}>
           <h2>{name}</h2>

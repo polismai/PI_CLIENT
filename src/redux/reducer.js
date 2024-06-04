@@ -33,10 +33,6 @@ const initialState = {
   selectedGenderValue: DEFAULT_VALUE
 };
 
-const convertToBoolean = (value) => {
-  return value === 'true';
-};
-
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_VG:
@@ -102,15 +98,15 @@ const rootReducer = (state = initialState, action) => {
 
       if (state.searchString !== '') {
         filteredByOrigin = state.filteredVideogames.filter((videogame) => 
-          videogame.created === convertToBoolean(action.payload)
+          typeof videogame.id === action.payload
         );
       } else if (state.filteredVideogames.length > 0) {
         filteredByOrigin = state.filteredVideogames.filter((videogame) => 
-          videogame.created === convertToBoolean(action.payload)
+          typeof videogame.id === action.payload
         );
       } else {
         filteredByOrigin = state.allVideogames.filter((videogame) => 
-          videogame.created === convertToBoolean(action.payload)
+          typeof videogame.id === action.payload
         );
       }  
       return {
